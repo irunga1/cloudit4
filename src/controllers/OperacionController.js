@@ -11,13 +11,10 @@ const {Storage} = require('@google-cloud/storage');
 
 
 function operate(req, res){
-    var params = req.body;
-    
-    console.log(params);
-    
-    
+    var params = req.body;    
+    console.log(params);    
     if((params.Nombre !=="") && (params.Apellido !=="") && (params.Telefono !=="")&& (params.Edad !=="")){
-        res.status(200).send({message:"entro a post"});
+        
         var btoa = require('btoa');
         //console.log(params);
         const {Datastore} = require('@google-cloud/datastore');
@@ -40,9 +37,9 @@ function operate(req, res){
         // const task = {
         //     key: taskKey,
         //     data: {
-        //         Apellido: 'Irungaray2',
+        //         Apellido: 'Irungaray',
         //         Edad:36,
-        //         Nombre: 'Juanito',
+        //         Nombre: 'Juan',
         //         Telefono:'42142727'
         //     },
         // };
@@ -56,12 +53,25 @@ function operate(req, res){
         console.log(`Saved ${task.key.name}: ${task.data.description}`);
         }
         quickStart(params).catch(console.error);
+        //res.status(200).send({message:"entro a post"});
+        var path = require('path');
+        var utileria = require("../libs/utileria");
+        var utObject = new utileria;
+        var ndirname =utObject.removeLastString(__dirname);
+        console.log(ndirname);
+        res.sendFile(path.join(ndirname+ 'views/redirect.html'));
+
     }
     else{
-        res.status(200).send({message:"no entro a post"});
+        //res.status(200).send({message:"no entro a post"});
+        var path = require('path');
+        var utileria = require("../libs/utileria");
+        var utObject = new utileria;
+        var ndirname =utObject.removeLastString(__dirname);
+        console.log(ndirname);
+        res.sendFile(path.join(ndirname+ 'views/error.html'));
     }
     
-
 }
 module.exports = {
     operate
